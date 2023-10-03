@@ -1,0 +1,6 @@
+{
+    "material-icon-theme.activeIconPack": "react",
+    "files.associations": {
+        "*.js": "javascriptreact"
+    }
+}
