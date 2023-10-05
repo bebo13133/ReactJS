@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 
 
@@ -15,6 +15,7 @@ const Timer = (props) => {
     }, 1000)
     return (
         <div>
+            <h2>Time start</h2>
             Time:{seconds}s
         </div>
     )
