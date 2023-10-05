@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
 
+import MovieList from './components/Movies'
+import movieData from './components/Data'
+import Timer from './components/Timer'
+import './App.css';
+//todo: MovieList
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Movie list </h1>
+      <h2>Time start</h2>
+      <Timer start={0}/>
+  <MovieList movies={movieData}/>
     </div>
   );
 }
