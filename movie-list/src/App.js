@@ -27,7 +27,7 @@ function App() {
 
 
     <div className="App">
-      <h1> My Movie collection</h1>
+      <h1 style={{ color: "rgb(18, 166, 179)", textAlign: 'center' }} > My Movie collection</h1>
       <MovieList movies={movies} onDelete={onDelete} onSelected={onSelected} />
     </div>
   );
