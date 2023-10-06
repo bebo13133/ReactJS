@@ -1,0 +1,16 @@
+.movie-article{
+
+background-color: bisque;
+border-bottom: 15px solid greenyellow;
+border-left: 15px solid rgb(101, 18, 61);
+border-top: 15px solid gray;
+border-right: 15px solid rgb(101, 18, 61);
+padding-bottom: 20px;
+padding-left: 5%;
+
+display:flexbox;
+align-items: center;
+height: 100%
+}
+
+
