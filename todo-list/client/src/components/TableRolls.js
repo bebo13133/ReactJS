@@ -1,7 +1,8 @@
+import TodoList from './TodoList'
+
 export default function TableRolls({
     todos,
     todoStatus
-
 }) {
 
     return (
@@ -16,22 +17,10 @@ export default function TableRolls({
             </thead>
             <tbody>
 
-                {todos.map(todo => (
+                {todos.map(todo => (<TodoList key={todo.id} {...todo} todoStatus={todoStatus} />
 
-                    <tr key={todo.id} className={`${todo.isCompleted ? "is-completed": "todo"}`}>
-                        <td>{todo.text}</td>
-                        <td>{todo.isCompleted? 'Complete' : "Not Complete" }</td>
-                        <td className="todo-action">
-                            <button className="btn todo-btn" onClick={()=> todoStatus(todo.id)}>Change status</button>
-                        </td>
-                    </tr>
 
                 ))}
-
-
-
-
-
             </tbody>
         </table>
 
