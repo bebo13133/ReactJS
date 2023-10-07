@@ -11,7 +11,9 @@ import { useEffect } from 'react';
 
 function App() {
 const [users,setUsers] = useState([])
-  useEffect(() =>{
+const [isLoading,setLoading] = useState(true)
+
+useEffect(() =>{
       userService.getAll()
       .then(users=>
         
@@ -20,7 +22,7 @@ const [users,setUsers] = useState([])
       .catch(err=>{
         console.log('Error' + err)
       })
-
+      setLoading(false)
   },[])
 
 
@@ -31,7 +33,9 @@ const [users,setUsers] = useState([])
       <section className="card users-container">
 
       <SearchForm/>
-      <TableComponent users={users}/>
+
+      
+      <TableComponent users={users} isLoading={isLoading}/>
       <button className="btn-add btn">Add new user</button>
 
       <Pagination/>
