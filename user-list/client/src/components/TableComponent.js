@@ -2,11 +2,21 @@ import Details from "./Details";
 import User from "./User";
 import { Fragment, useState } from "react";
 import * as UserService from "../services/UserService"
+import UserCreate from "./UserCreate";
+import DeleteUser from "./DeleteUser";
 export default function TableComponent({
+
+    onUserCreateSubmit,
     users,
-    isLoading
+    onUserDelete
+
+
 }) {
     const [selectedUser, setSelectedUser] = useState(null)
+    const [selectedDeleteUser, setSelectedDeleteUser] = useState(null)
+
+    const [showUser, setShowUser] = useState(false)
+    const [showDeleteUser, setShowDeleteUser] = useState(false)
 
     const onInfo = async (userId) => {
         const user = await UserService.getOne(userId)
@@ -14,17 +24,42 @@ export default function TableComponent({
         if (user) setSelectedUser(user)
     }
 
-    const onClose = ()=>{
-
+    const onClose = () => {
         setSelectedUser(null)
+        setShowUser(false)
+        setShowDeleteUser(false)
+    }
+
+    const onShowAddClick = () => {
+        setShowUser(true)
 
     }
 
+    const onUserSubmitHandler = (e) => {
+        onUserCreateSubmit(e);
+        setShowUser(false);
+    }
+
+    const onDeleteClick = (userId) => {
+        setSelectedDeleteUser({ _id: userId });
+        setShowDeleteUser(true)
+
+    }
+    const deleteHandler = () => {
+        onUserDelete(selectedDeleteUser._id)
+        console.log(selectedDeleteUser._id)
+        onClose()
+
+    }
 
     return (
 
         <Fragment>
-            {selectedUser && <Details {...selectedUser} onClose={onClose}/>}
+
+
+            {selectedUser && <Details {...selectedUser} onClose={onClose} />}
+            {showUser && <UserCreate onClose={onClose} onUserCreateSubmit={onUserSubmitHandler} />}
+            {showDeleteUser && <DeleteUser onClose={onClose} onUserDelete={deleteHandler} />}
             <div className="table-wrapper">
 
 
@@ -152,10 +187,17 @@ export default function TableComponent({
                     </thead>
                     <tbody>
 
-                        {users.map(u => <User key={u._id} {...u} onInfo={onInfo} />)}
+                        {users.map(u => <User
+                            {...u}
+                            key={u._id}
+                            onInfo={onInfo}
+                            onDeleteClick={onDeleteClick}
+                        />)}
                     </tbody>
                 </table>
             </div>
+            <button className="btn-add btn" onClick={onShowAddClick}>Add new user</button>
+
         </Fragment>
     )
 }
