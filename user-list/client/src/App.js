@@ -8,6 +8,7 @@ import TableComponent from './components/TableComponent';
 import './App.css'
 import Pagination from './components/Pagination';
 import { useEffect } from 'react';
+import Loading from './components/Loading';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -47,6 +48,8 @@ function App() {
     <Fragment>
       <Header />
       <main className="main">
+
+        {isLoading && <Loading/>}
         <section className="card users-container">
 
           <SearchForm />
