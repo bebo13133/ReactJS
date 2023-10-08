@@ -9,10 +9,12 @@ import './App.css'
 import Pagination from './components/Pagination';
 import { useEffect } from 'react';
 import Loading from './components/Loading';
+import SearchResult from './components/SearchResult'
 
 function App() {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true)
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     userService.getAll()
@@ -44,21 +46,58 @@ function App() {
 
   }
 
+  const onEditUser = async (e, userId) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData)
+    const editUser = await userService.updateUser(data, userId)
+
+    setUsers(state => state.map(x => x._id === userId ? editUser : x));
+  }
+
+  const handleSearch = (searchQuery, selectedCriteria) => {
+    // Filter users based on the selected criteria and search query
+    const filteredResults = users.filter((user) => {
+      if (selectedCriteria === 'firstName') {
+        return user.firstName.toLowerCase().includes(searchQuery.toLowerCase());
+      } else if (selectedCriteria === 'lastName') {
+        return user.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+      } else if (selectedCriteria === 'email') {
+        return user.email.toLowerCase().includes(searchQuery.toLowerCase());
+      } else if (selectedCriteria === 'phone') {
+        return user.phone.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      return false;
+    });
+    setFilteredUsers(filteredResults);
+  };
+
+
+
+
+
+
   return (
     <Fragment>
       <Header />
       <main className="main">
 
-        {isLoading && <Loading/>}
+        {isLoading && <Loading />}
+
+
+
         <section className="card users-container">
 
-          <SearchForm />
+          <SearchForm onSearch={handleSearch} />
 
-
-          <TableComponent users={users}
+      
+            {filteredUsers.length > 0  ? filteredUsers.map(user => <SearchResult {...user} />) :  <TableComponent users={users}
             isLoading={isLoading}
             onUserCreateSubmit={onUserCreateSubmit}
-            onUserDelete={onUserDelete} />
+            onUserDelete={onUserDelete}
+            onEditUser={onEditUser} filteredUsers={filteredUsers} />}
+          
+         
 
           <Pagination />
         </section>

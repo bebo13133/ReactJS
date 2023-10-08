@@ -4,16 +4,19 @@ import { Fragment, useState } from "react";
 import * as UserService from "../services/UserService"
 import UserCreate from "./UserCreate";
 import DeleteUser from "./DeleteUser";
+import SearchResult from './SearchResult'
 export default function TableComponent({
 
     onUserCreateSubmit,
     users,
-    onUserDelete
-
+    onUserDelete,
+    onEditUser,
+    filteredUsers
 
 }) {
     const [selectedUser, setSelectedUser] = useState(null)
     const [selectedDeleteUser, setSelectedDeleteUser] = useState(null)
+    const [showEditUser, setShowEditUser] = useState(null)
 
     const [showUser, setShowUser] = useState(false)
     const [showDeleteUser, setShowDeleteUser] = useState(false)
@@ -28,6 +31,7 @@ export default function TableComponent({
         setSelectedUser(null)
         setShowUser(false)
         setShowDeleteUser(false)
+        setShowEditUser(null)
     }
 
     const onShowAddClick = () => {
@@ -51,6 +55,16 @@ export default function TableComponent({
         onClose()
 
     }
+    const onEditClick = async (userId) => {
+
+        const user = await UserService.getOne(userId)
+        setShowEditUser(user)
+    }
+    const onEditSubmitHandler = (e,userId) => {
+        onEditUser(e,userId);
+        setShowEditUser(false);
+    }
+
 
     return (
 
@@ -60,6 +74,8 @@ export default function TableComponent({
             {selectedUser && <Details {...selectedUser} onClose={onClose} />}
             {showUser && <UserCreate onClose={onClose} onUserCreateSubmit={onUserSubmitHandler} />}
             {showDeleteUser && <DeleteUser onClose={onClose} onUserDelete={deleteHandler} />}
+            {showEditUser && <UserCreate onClose={onClose} user={showEditUser} onUserCreateSubmit={onEditSubmitHandler} />}
+            
             <div className="table-wrapper">
 
 
@@ -186,12 +202,13 @@ export default function TableComponent({
                         </tr>
                     </thead>
                     <tbody>
-
+                        
                         {users.map(u => <User
                             {...u}
                             key={u._id}
                             onInfo={onInfo}
                             onDeleteClick={onDeleteClick}
+                            onEditClick={onEditClick}
                         />)}
                     </tbody>
                 </table>

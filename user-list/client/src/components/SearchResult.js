@@ -12,10 +12,6 @@ export default function User({
     imageUrl,
     phoneNumber,
     createdAt,
-    updatedAt,
-    onInfo,
-    onDeleteClick,
-    onEditClick
 
 }) {
     return (
@@ -29,7 +25,7 @@ export default function User({
             <td>{email}</td>
             <td>{phoneNumber}</td>
             <td>{newDate(createdAt)}</td>
-
+{/* 
             <td className="actions">
                 <button className="btn edit-btn" title="Edit" onClick={()=>onEditClick(_id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
@@ -57,7 +53,7 @@ export default function User({
                         </path>
                     </svg>
                 </button>
-            </td>
+            </td>  */}
         </tr>
     )
 }

@@ -47,8 +47,25 @@ export const createUser = async (userData) => {
 export const deleteUser = async (userId) => {
     const response = await fetch(`${userUrl}/${userId}`,{
         method: 'DELETE',
-        
+
     })
     const result = await response.json()
     return result;
+}
+
+
+export const updateUser= async(userData, userId)=>{
+    const { country, city, street, streetNumber, ...data } = userData
+    data.address = { country, city, street, streetNumber, }
+
+    const response = await fetch(`${userUrl}/${userId}`,{
+        method: 'PUT',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    const result = await response.json()
+    return result.user
+
 }
