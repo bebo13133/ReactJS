@@ -58,7 +58,7 @@ function App() {
 //? Search for users
   const handleSearch = (searchQuery, selectedCriteria) => {
 
-    if (selectedCriteria === 'all') {
+    if (selectedCriteria === "all") {
   
       const filteredResults = users.filter((user) => {
         const query = searchQuery.toLowerCase();
