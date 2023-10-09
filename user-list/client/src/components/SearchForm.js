@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
-export default function SearchForm({ onSearch }) {
+
+export default function SearchForm({ onSearch,onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCriteria, setSelectedCriteria] = useState('');
 
@@ -47,8 +47,10 @@ export default function SearchForm({ onSearch }) {
           value={searchQuery}
           onChange={handleInputChange}
         />
+
+{/* searchQuery!==""  && */}
         {(
-          <button className="btn close-btn" onClick={() => setSearchQuery('')}>
+          <button className="btn close-btn" onClick={(e) =>{e.preventDefault(); onClose(setSearchQuery)}}>
             <i className="fa-solid fa-xmark"></i>
           </button>
         )}

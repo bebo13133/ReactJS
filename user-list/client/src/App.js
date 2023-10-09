@@ -96,7 +96,10 @@ function App() {
 
     }
   };
-  
+  const onClose = (setSearchQuery) => {
+    setFilteredUsers([]);
+    setSearchQuery("")
+}
   
   
 
@@ -116,7 +119,7 @@ function App() {
 
         <section className="card users-container">
 
-          <SearchForm onSearch={handleSearch} />
+          <SearchForm onSearch={handleSearch} onClose={onClose}/>
 
        <TableComponent users={users}
         
