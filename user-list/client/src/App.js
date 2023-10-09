@@ -66,10 +66,10 @@ function App() {
         const lastNameMatch = user.lastName.toLowerCase().includes(query);
         const emailMatch = user.email.toLowerCase().includes(query);
         const phoneMatch = user.phoneNumber.toLowerCase().includes(query);
-  
+
         return firstNameMatch || lastNameMatch || emailMatch || phoneMatch;
       });
-  
+   
       setFilteredUsers(filteredResults);
   
       if (filteredResults.length === 0 || searchQuery.trim() === '') {
