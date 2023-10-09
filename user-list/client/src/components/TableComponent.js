@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import * as UserService from "../services/UserService"
 import UserCreate from "./UserCreate";
 import DeleteUser from "./DeleteUser";
-// import SearchResult from './SearchResult'
+
 export default function TableComponent({
 
     onUserCreateSubmit,
@@ -20,6 +20,10 @@ export default function TableComponent({
 
     const [showUser, setShowUser] = useState(false)
     const [showDeleteUser, setShowDeleteUser] = useState(false)
+
+    //?Sort the users
+    const [sortOrder, setSortOrder] = useState('asc')
+    const [sortedColumn, setSortedColumn] = useState(null)
 
     const onInfo = async (userId) => {
         const user = await UserService.getOne(userId)
@@ -60,10 +64,32 @@ export default function TableComponent({
         const user = await UserService.getOne(userId)
         setShowEditUser(user)
     }
-    const onEditSubmitHandler = (e,userId) => {
-        onEditUser(e,userId);
+    const onEditSubmitHandler = (e, userId) => {
+        onEditUser(e, userId);
         setShowEditUser(false);
     }
+
+    //? Sorted
+
+    const handleSortClick = (columnName) => {
+
+        if (sortedColumn === columnName) {
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+
+        } else {
+            setSortedColumn(columnName)
+            setSortOrder('asc')
+        }
+    };
+
+    const sortedUsers = [...users].sort((a, b) => {
+        if (sortOrder === 'asc') {
+            return a[sortedColumn] - b[sortedColumn] ? -1 : 1
+        } else {
+            return a[sortedColumn] > b[sortedColumn] ? -1 : 1;
+        }
+
+    })
 
 
     return (
@@ -75,7 +101,7 @@ export default function TableComponent({
             {showUser && <UserCreate onClose={onClose} onUserCreateSubmit={onUserSubmitHandler} />}
             {showDeleteUser && <DeleteUser onClose={onClose} onUserDelete={deleteHandler} />}
             {showEditUser && <UserCreate onClose={onClose} user={showEditUser} onUserCreateSubmit={onEditSubmitHandler} />}
-            
+
             <div className="table-wrapper">
 
 
@@ -152,7 +178,10 @@ export default function TableComponent({
                             <th>
                                 Image
                             </th>
-                            <th>
+                            <th onClick={() => handleSortClick('firstName')}>
+                                {sortedColumn === "firstName" && (
+                                    <i className={`fa fa-arrow-${sortOrder === "asc" ? "up" : "down"}`} />
+                                )}
                                 First name<svg className="icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" aria-hidden="true" focusable="false" data-prefix="fas"
                                     data-icon="arrow-down" role="img"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -161,7 +190,10 @@ export default function TableComponent({
                                     </path>
                                 </svg>
                             </th>
-                            <th>
+                            <th onClick={() => handleSortClick('lastName')}>
+                                   {sortedColumn === "lastName" && (
+                                    <i className={`fa fa-arrow-${sortOrder === "asc" ? "up" : "down"}`} />
+                                )}
                                 Last name<svg className="icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
                                     role="img" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 384 512">
@@ -170,7 +202,10 @@ export default function TableComponent({
                                     </path>
                                 </svg>
                             </th>
-                            <th>
+                            <th onClick={() => handleSortClick('email')}>
+                                   {sortedColumn === "email" && (
+                                    <i className={`fa fa-arrow-${sortOrder === "asc" ? "up" : "down"}`} />
+                                )}
                                 Email<svg className="icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
                                     role="img" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 384 512">
@@ -179,7 +214,10 @@ export default function TableComponent({
                                     </path>
                                 </svg>
                             </th>
-                            <th>
+                            <th onClick={() => handleSortClick('phoneNumber')}>
+                                   {sortedColumn === "phoneNumber" && (
+                                    <i className={`fa fa-arrow-${sortOrder === "asc" ? "up" : "down"}`} />
+                                )}
                                 Phone<svg className="icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
                                     role="img" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 384 512">
@@ -202,18 +240,18 @@ export default function TableComponent({
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredUsers.length > 0 ? filteredUsers.map(user =><User {...user}  {...user}
+                        {filteredUsers.length > 0 ? filteredUsers.map(user => <User {...user} {...user}
                             key={user._id}
                             onInfo={onInfo}
                             onDeleteClick={onDeleteClick}
-                            onEditClick={onEditClick}/>) : users.map(user => <User
-                            {...user}
-                            key={user._id}
-                            onInfo={onInfo}
-                            onDeleteClick={onDeleteClick}
-                            onEditClick={onEditClick}
-                        />)}
-                       
+                            onEditClick={onEditClick} />) : sortedUsers.map(user => <User
+                                {...user}
+                                key={user._id}
+                                onInfo={onInfo}
+                                onDeleteClick={onDeleteClick}
+                                onEditClick={onEditClick}
+                            />)}
+
                     </tbody>
                 </table>
             </div>
