@@ -21,7 +21,7 @@ function App() {
       .then(users =>{
 
         setUsers(users)
-      setFilteredUsers(users)
+        setFilteredUsers([])
   })
       .catch(err => {
         console.log('Error' + err)
@@ -58,9 +58,23 @@ function App() {
 //? Search for users
   const handleSearch = (searchQuery, selectedCriteria) => {
 
-    if (searchQuery.trim() === '' && selectedCriteria === 'all') {
-    
-      setFilteredUsers(users)
+    if (selectedCriteria === 'all') {
+  
+      const filteredResults = users.filter((user) => {
+        const query = searchQuery.toLowerCase();
+        const firstNameMatch = user.firstName.toLowerCase().includes(query);
+        const lastNameMatch = user.lastName.toLowerCase().includes(query);
+        const emailMatch = user.email.toLowerCase().includes(query);
+        const phoneMatch = user.phoneNumber.toLowerCase().includes(query);
+  
+        return firstNameMatch || lastNameMatch || emailMatch || phoneMatch;
+      });
+  
+      setFilteredUsers(filteredResults);
+  
+      if (filteredResults.length === 0 || searchQuery.trim() === '') {
+        setFilteredUsers([]);
+      }
     } else {
       const filteredResults = users.filter((user) => {
         const query = searchQuery.toLowerCase();
@@ -78,8 +92,9 @@ function App() {
       if (filteredResults.length === 0 ) {
         setFilteredUsers([]);
       }
+    console.log(filteredResults)
+
     }
-    console.log(searchQuery)
   };
   
   
