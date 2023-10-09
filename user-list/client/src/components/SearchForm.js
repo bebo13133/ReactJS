@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom'
 export default function SearchForm({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCriteria, setSelectedCriteria] = useState('');
@@ -27,7 +27,7 @@ export default function SearchForm({ onSearch }) {
           aria-hidden="true"
           focusable="false"
           data-prefix="fas"
-          data-icon="bob"
+          data-icon="user"
           className="svg-inline--fa fa-user SearchBar_icon__cXpTg"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +36,8 @@ export default function SearchForm({ onSearch }) {
           {/* Your SVG code here */}
         </svg>
         <span>Users</span>
+         {/* <Link to="/">Back to Home</Link>   */}
+      
       </h2>
       <div className="search-input-container">
         <input
@@ -45,7 +47,7 @@ export default function SearchForm({ onSearch }) {
           value={searchQuery}
           onChange={handleInputChange}
         />
-        {searchQuery.length > 0 && (
+        {(
           <button className="btn close-btn" onClick={() => setSearchQuery('')}>
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -63,7 +65,7 @@ export default function SearchForm({ onSearch }) {
           value={selectedCriteria}
           onChange={handleCriteriaChange}
         >
-          <option value="">Not selected</option>
+          <option value="all">All</option>
           <option value="firstName">First Name</option>
           <option value="lastName">Last Name</option>
           <option value="email">Email</option>

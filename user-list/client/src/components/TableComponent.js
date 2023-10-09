@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import * as UserService from "../services/UserService"
 import UserCreate from "./UserCreate";
 import DeleteUser from "./DeleteUser";
-import SearchResult from './SearchResult'
+// import SearchResult from './SearchResult'
 export default function TableComponent({
 
     onUserCreateSubmit,
@@ -202,14 +202,18 @@ export default function TableComponent({
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        {users.map(u => <User
-                            {...u}
-                            key={u._id}
+                        {filteredUsers.length > 0 ? filteredUsers.map(user =><User {...user}  {...user}
+                            key={user._id}
+                            onInfo={onInfo}
+                            onDeleteClick={onDeleteClick}
+                            onEditClick={onEditClick}/>) : users.map(user => <User
+                            {...user}
+                            key={user._id}
                             onInfo={onInfo}
                             onDeleteClick={onDeleteClick}
                             onEditClick={onEditClick}
                         />)}
+                       
                     </tbody>
                 </table>
             </div>

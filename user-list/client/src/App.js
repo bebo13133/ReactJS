@@ -9,7 +9,7 @@ import './App.css'
 import Pagination from './components/Pagination';
 import { useEffect } from 'react';
 import Loading from './components/Loading';
-import SearchResult from './components/SearchResult'
+
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -18,10 +18,11 @@ function App() {
 
   useEffect(() => {
     userService.getAll()
-      .then(users =>
+      .then(users =>{
 
         setUsers(users)
-      )
+      setFilteredUsers(users)
+  })
       .catch(err => {
         console.log('Error' + err)
       })
@@ -54,23 +55,35 @@ function App() {
 
     setUsers(state => state.map(x => x._id === userId ? editUser : x));
   }
-
+//? Search for users
   const handleSearch = (searchQuery, selectedCriteria) => {
-    // Filter users based on the selected criteria and search query
-    const filteredResults = users.filter((user) => {
-      if (selectedCriteria === 'firstName') {
-        return user.firstName.toLowerCase().includes(searchQuery.toLowerCase());
-      } else if (selectedCriteria === 'lastName') {
-        return user.lastName.toLowerCase().includes(searchQuery.toLowerCase());
-      } else if (selectedCriteria === 'email') {
-        return user.email.toLowerCase().includes(searchQuery.toLowerCase());
-      } else if (selectedCriteria === 'phone') {
-        return user.phone.toLowerCase().includes(searchQuery.toLowerCase());
+
+    if (searchQuery.trim() === '' && selectedCriteria === 'all') {
+    
+      setFilteredUsers(users)
+    } else {
+      const filteredResults = users.filter((user) => {
+        const query = searchQuery.toLowerCase();
+        const firstNameMatch = selectedCriteria === 'firstName' && user.firstName.toLowerCase().includes(query);
+        const lastNameMatch = selectedCriteria === 'lastName' && user.lastName.toLowerCase().includes(query);
+        const emailMatch = selectedCriteria === 'email' && user.email.toLowerCase().includes(query);
+        const phoneMatch = selectedCriteria === 'phone' && user.phoneNumber.toLowerCase().includes(query);
+  
+        return firstNameMatch || lastNameMatch || emailMatch || phoneMatch;
+      });
+
+      setFilteredUsers(filteredResults);
+  
+
+      if (filteredResults.length === 0 ) {
+        setFilteredUsers([]);
       }
-      return false;
-    });
-    setFilteredUsers(filteredResults);
+    }
+    console.log(searchQuery)
   };
+  
+  
+  
 
 
 
@@ -90,12 +103,11 @@ function App() {
 
           <SearchForm onSearch={handleSearch} />
 
-      
-            {filteredUsers.length > 0  ? filteredUsers.map(user => <SearchResult {...user} />) :  <TableComponent users={users}
-            isLoading={isLoading}
+       <TableComponent users={users}
+        
             onUserCreateSubmit={onUserCreateSubmit}
             onUserDelete={onUserDelete}
-            onEditUser={onEditUser} filteredUsers={filteredUsers} />}
+            onEditUser={onEditUser} filteredUsers={filteredUsers} />
           
          
 
