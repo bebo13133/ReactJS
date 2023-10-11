@@ -1,0 +1,20 @@
+.navigation a{
+
+    font-size: 30px;
+  
+ 
+    text-decoration: none;
+    color:red ;
+    font-weight: bold;
+}
+
+.listStyle li{
+    list-style: none;
+    display: inline;
+margin-left: 30px;
+}
+.listStyle li:hover{
+text-decoration: underline red;
+
+
+}
