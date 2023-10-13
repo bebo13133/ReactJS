@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useParams,useNavigate } from 'react-router-dom'
+import { useEffect, useState,  } from 'react'
 const baseUrl = `https://swapi.dev/api/people`
 
 
 export const People = () => {
     const { peopleId } = useParams()
-
+const navigate = useNavigate()
     console.log(peopleId)
     const [people, setPeople] = useState({})
 
@@ -19,6 +19,10 @@ export const People = () => {
 
     }, [peopleId])
 
+const onBackButtonClick = () => {
+    navigate('/people')
+}
+
     return (
         <>
             <h1>People page</h1>
@@ -26,6 +30,8 @@ export const People = () => {
             <h3>Height: {people.height}</h3>
             <h3>Mass: {people.mass}</h3>
             <h3>Gender: {people.gender}</h3>
+
+            <button onClick={onBackButtonClick}>Back</button>
 
 
 
