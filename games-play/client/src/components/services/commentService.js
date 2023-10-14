@@ -3,6 +3,7 @@ const baseUrl = `http://localhost:3030/jsonstore/comments`
 
 export const create =async(data)=> {
     const result = await post(baseUrl,data)
+    return result
 }
 export const getAll = async(gameId)=> {
     // const query = encodeURIComponent(`gameId="${gameId}"`)

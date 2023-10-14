@@ -30,11 +30,16 @@ export const GameDetails = () => {
 
     const onCommentSubmit = async (e) => {
         e.preventDefault()
-        await commentService.create({
+      const game=  await commentService.create({
             gameId,
             username,
             comment
         })
+
+        console.log(...game.comment)
+     
+        //  setAllComments(state=> [...state, (comment: game.comment)])
+         console.log(allComments)
         setComment('')
         setUsername('')
     }
