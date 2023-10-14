@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { ToDoList } from './components/ToDoList';
+import { ToDoContext } from './contexts/ToDoContext';
 import { AddToDo } from './components/AddToDoModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -32,23 +33,37 @@ const addToDoSubmit = async (values) => {
     })
 
     const result = await response.json();
-    console.log(result)
+    setShowModal(false)
+    setTodoItem(state=>[...state,result])
 
 }
 const onShowModal = () =>{
 
     setShowModal(true)
 }
+const closeModal = () =>{
+    setShowModal(false)
+}
 
+const onToDoDelete = async(todoId) =>{
+    await fetch(`${baseUrl}/${todoId}`,{method: 'DELETE'})
+    setTodoItem(state=> state.filter(todo=>todo._id !== todoId))
+}
+
+const contextContainer ={
+
+    onToDoDelete
+}
 
     return (
+        <ToDoContext.Provider value={contextContainer}>
         <div>
             <Header />
-            <ToDoList todoItem={todoItem} onShowModal={onShowModal}/>
+            <ToDoList todoItem={todoItem} onShowModal={onShowModal} />
 
-            <AddToDo addToDoSubmit={addToDoSubmit} show={showModal}/>
+            <AddToDo addToDoSubmit={addToDoSubmit} show={showModal} closeModal={closeModal}/>
         </div>
-
+        </ToDoContext.Provider>
     );
 }
 
