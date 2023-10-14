@@ -1,8 +1,10 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import { ToDoItems } from '../components/ToDo';
+import Button from 'react-bootstrap/Button';
 
 export const ToDoList = ({
     todoItem,
+    onShowModal
 }) => {
     const alertClicked = () => {
         alert('You clicked the third ListGroupItem');
@@ -15,9 +17,9 @@ export const ToDoList = ({
             <ListGroup>
                 {todoItem.map(x => <ToDoItems key={x._id}{...x} />)}
 
-                <ListGroup.Item action onClick={alertClicked}>
-                    This one is a button
-                </ListGroup.Item>
+
+            <Button onClick={onShowModal} style={{color:"white", borderColor: "red", margin: "20px 100px",backgroundColor:"#384257"}}variant="add">Add</Button>{' '}
+
             </ListGroup>
 
         </div>
