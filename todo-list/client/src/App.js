@@ -19,8 +19,6 @@ const [isLoading,setIsLoading] = useState(true)
                 setIsLoading(false)
 
             })
-
-
     }, []);
 
     const todoStatus = (id) => {

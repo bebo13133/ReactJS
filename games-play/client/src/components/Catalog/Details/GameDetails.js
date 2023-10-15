@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import * as gameService from '../../services/gameService'
+import {gameServiceFactory} from '../../services/gameService'
 import { OneGame } from "./OneGame"
-import * as commentService from '../../services/commentService'
-
-
+import {commentServiceFactory} from '../../services/commentService'
+import { useService } from "../../../Hooks/useService"
+import { useContext } from "react"
+import { UserContext } from "../../contexts/UserContext"
 
 export const GameDetails = () => {
     const { gameId } = useParams()
@@ -12,6 +13,12 @@ export const GameDetails = () => {
     const [username, setUsername] = useState('')
     const [comment, setComment] = useState('')
     const [allComments, setAllComments] = useState([])
+
+    
+    const{token} = useContext(UserContext)
+    const gameService = useService(gameServiceFactory)
+    const commentService = commentServiceFactory(token)
+
     useEffect(() => {
         gameService.getOne(gameId)
             .then(result => {
@@ -26,7 +33,7 @@ export const GameDetails = () => {
             })
 
 
-    }, [gameId])
+    },[gameId])
 
     const onCommentSubmit = async (e) => {
         e.preventDefault()

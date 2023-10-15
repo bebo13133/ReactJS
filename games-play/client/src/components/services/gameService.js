@@ -1,23 +1,36 @@
-import {get, post} from './requester'
+import { requestFactory } from './requester'
 
-const baseUrl = `http://localhost:3030/jsonstore/games`
+const baseUrl = `http://localhost:3030/data/games`
 
 
-export const getAll =async() =>{
 
-    const result= await get(baseUrl)
+
+
+ export const gameServiceFactory = (token) =>{                    //? config вместо token може да е всичко 
+        const request = requestFactory(token)
+
+
+    const getAll = async () => {
+
+        const result = await request.get(baseUrl)
+        const games = Object.values(result)
     
-const games = Object.values(result)
+        return games
+    
+    }
+    
+     const create = async (gameData) => {
+    
+        const result = await request.post(baseUrl, gameData)
+        return result
+    }
+    
+     const getOne = async (gameId) => await request.get(`${baseUrl}/${gameId}`)
 
-    return games
+    return {
+        getAll,
+        create,
+        getOne,
+    }
 
-}
-export const create = async(gameData) =>{
-
-    const result= await post(baseUrl,gameData)
-
-
-    return result
-}
-
-export const getOne = async(gameId) => await get(`${baseUrl}/${gameId}`)
+ }

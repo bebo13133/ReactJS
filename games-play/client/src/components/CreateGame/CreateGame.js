@@ -1,28 +1,21 @@
 import {useState} from 'react'
-
-export const CreateGame = ({
-    onSubmit,
-}) => {
-
-    const [values,setValues] = useState({
+import { useForm } from '../../Hooks/useForm'
+import { useContext } from 'react'
+import { UserContext } from '../contexts/UserContext'
+export const CreateGame = () => {
+    const {onCreateGameSubmit} = useContext(UserContext)
+    const {values,onChangeHandler,onSubmit} = useForm({
         title:"",
         category: "",
         maxLevel: '',
         imageUrl: "",
         summary: "",
 
-    })
+    },onCreateGameSubmit)
 
-    const onChangeHandler = (e)=>{
-        let value = e.target.value
-        // if(value === "maxLevel") value = Number(value)
-
-        setValues(state=> ({...state, [e.target.name]: value}))
-
-    }
     return (
         <section id="create-page" className="auth">
-            <form id="create" onSubmit={(e)=>onSubmit(e,values)}>
+            <form id="create" onSubmit={onSubmit}>
                 <div className="container">
 
                     <h1>Create Game</h1>
