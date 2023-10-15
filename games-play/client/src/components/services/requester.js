@@ -14,12 +14,16 @@ const request = async (method, url, data) => {
     }
 
 const response = await fetch(url, options)
-
+if(!response.ok) {
+    const result = response.json()
+    throw result
+}
 try {
     const result = await response.json()
-    return result
+
+        return result
 } catch (e) {
-    return {}
+   return {}
 }
 
 }
