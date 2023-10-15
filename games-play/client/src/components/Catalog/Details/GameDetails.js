@@ -38,7 +38,7 @@ export const GameDetails = () => {
 
         console.log(...game.comment)
      
-        //  setAllComments(state=> [...state, (comment: game.comment)])
+        setAllComments((prevComments) => [...prevComments,{comment: game.comment, username: game.username}])
          console.log(allComments)
         setComment('')
         setUsername('')

@@ -6,9 +6,9 @@ export const ToDoList = ({
     todoItem,
     onShowModal
 }) => {
-    const alertClicked = () => {
-        alert('You clicked the third ListGroupItem');
-    };
+    // const alertClicked = () => {
+    //     alert('You clicked the third ListGroupItem');
+    // };
     return (
 
 

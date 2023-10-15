@@ -6,16 +6,15 @@ import { ToDoContext } from '../contexts/ToDoContext';
 export const ToDoItems = ({
     text,
     isComplete,
-    _id
-
+    _id,
 }) => {
-const {onToDoDelete} =useContext(ToDoContext)
+const {onToDoDelete, onCompleteClick} =useContext(ToDoContext)
 
 
     return (
         <div>
-            <ListGroup.Item action href="#link1" style={{display:"flex", justifyContent:"space-between"}}>
-                {text}
+            <ListGroup.Item action style={{display:"flex", justifyContent:"space-between"}} onClick={()=>onCompleteClick(_id)}>
+               <p style={{textDecoration: isComplete ? "line-through red ": "none"}} >{text}</p> 
                 <Button onClick={()=>onToDoDelete(_id)} variant="danger">X</Button>{' '}
             </ListGroup.Item>
 
