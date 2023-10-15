@@ -42,7 +42,7 @@ navigate("/catalog")
     try{
       const newUser = await userService.login(data)
       setAuth(newUser)
-    console.log(isAuth)
+   navigate("/catalog")
     }catch(err){
       console.log("PROBLEM")
 
@@ -51,7 +51,13 @@ navigate("/catalog")
   }
 
 const contextService = {
-  onLoginSubmit
+  onLoginSubmit,
+  userId: isAuth._id,
+  userEmail: isAuth.email,
+  token: isAuth.accessToken,
+  isAuthentication:!!isAuth.accessToken
+  
+
 }
 
   return (

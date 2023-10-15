@@ -1,30 +1,27 @@
 const request = async (method, url, data) => {
     const options = {}
 
-    if(method !== 'GET') {
+    if (method !== 'GET') {
         options.method = method
-    
-    if(data){
-        options.headers ={
-        'Content-Type': 'application/json'
+
+        if (data) {
+            options.headers = {
+                'Content-Type': 'application/json'
+            }
+            options.body = JSON.stringify(data)
+
         }
-        options.body= JSON.stringify(data)
-
-    }
     }
 
-const response = await fetch(url, options)
-if(!response.ok) {
-    const result = response.json()
-    throw result
-}
-try {
-    const result = await response.json()
+    const response = await fetch(url, options)
 
-        return result
-} catch (e) {
-   return {}
-}
+    if (response.status === 204) return {};
+
+    const result = await response.json();
+
+    if (!response.ok) throw result;
+
+    return result;
 
 }
 export const get = request.bind(null, 'GET')
