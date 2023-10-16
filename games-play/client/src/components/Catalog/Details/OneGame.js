@@ -1,5 +1,6 @@
-
-
+import { UserContext } from "../../contexts/UserContext"
+import { useContext } from "react"
+import { Link } from "react-router-dom"
 export const OneGame = ({
     title,
     category,
@@ -7,9 +8,13 @@ export const OneGame = ({
     maxLevel,
     _id,
     summary,
-    allComments
+    allComments,
+    _ownerId
 }) => {
 
+    const{userId,onDeleteClick} = useContext(UserContext)
+    const isOwner = _ownerId=== userId
+    console.log(isOwner)
     return (
         <div className="info-section">
 
@@ -39,11 +44,11 @@ export const OneGame = ({
 
             </div>
 
-            {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-            <div className="buttons">
-                <a href="#" className="button">Edit</a>
-                <a href="#" className="button">Delete</a>
-            </div>
+            {isOwner &&  <div className="buttons">
+                <Link to={`/catalog/${_id}/edit`} className="button">Edit</Link>
+                <button onClick={()=>onDeleteClick(_id)} className="button">Delete</button>
+            </div>}
+           
         </div>
     )
 

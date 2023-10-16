@@ -8,7 +8,7 @@ import { useContext } from "react"
 import { UserContext } from "../../contexts/UserContext"
 
 export const GameDetails = () => {
-    const { gameId } = useParams()
+    const { gameId} = useParams()
     const [detailsGame, setDetailsGame] = useState({})
     const [username, setUsername] = useState('')
     const [comment, setComment] = useState('')
@@ -51,24 +51,23 @@ export const GameDetails = () => {
         setUsername('')
     }
 
-
+ const ownerId = detailsGame._ownerId
 
     return (
         <section id="game-details">
             <h1>Game Details</h1>
 
-            <OneGame {...detailsGame} allComments={allComments} />
+            <OneGame {...detailsGame} allComments={allComments} _ownerId={ownerId}/>
 
-            {/* <!-- Bonus -->
-        <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-            <article className="create-comment">
+            {token && ( <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={onCommentSubmit}>
                     <input type="text" name="username" placeholder="name" value={username} onChange={(e) => setUsername(e.target.value)} ></input>
                     <textarea name="comment" placeholder="Comment......" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
                     <input className="btn submit" type="submit" value="Add Comment" />
                 </form>
-            </article>
+            </article>) }
+           
 
         </section>
 

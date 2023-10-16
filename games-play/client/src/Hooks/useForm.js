@@ -16,9 +16,16 @@ export const useForm = (initialValues, onSubmitHandler) => {
         if (onSubmitHandler) onSubmitHandler(values);
     }
 
+const onChangeValues = (newValues) => {
+
+    setValues(newValues)
+}
+
+
     return {
         onSubmit, 
         values,
-        onChangeHandler
+        onChangeHandler,
+        onChangeValues
     }
 }

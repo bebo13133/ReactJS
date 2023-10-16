@@ -27,10 +27,16 @@ const baseUrl = `http://localhost:3030/data/games`
     
      const getOne = async (gameId) => await request.get(`${baseUrl}/${gameId}`)
 
+    const deleteGame = (id)=> request.del(`${baseUrl}/${id}`)
+
+    const updateGame = (gameId,data)=> request.put(`${baseUrl}/${gameId}`, data)
+
     return {
         getAll,
         create,
         getOne,
+        delete:deleteGame,
+        update:updateGame,
     }
 
  }
