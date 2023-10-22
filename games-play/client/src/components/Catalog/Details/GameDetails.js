@@ -7,7 +7,9 @@ import { useService } from "../../../Hooks/useService"
 import { useContext } from "react"
 import { UserContext } from "../../contexts/UserContext"
 
-export const GameDetails = () => {
+export const GameDetails = ({
+    
+}) => {
     const { gameId} = useParams()
     const [detailsGame, setDetailsGame] = useState({})
     const [username, setUsername] = useState('')

@@ -73,6 +73,8 @@ function App() {
             <Route path={'/logout'} element={<Logout />} />
 
             <Route path={'/register'} element={<Register />} />
+
+            
             <Route path={'/create'} element={<CreateGame onSubmit={onCreateGameSubmit} />} />
             <Route path={'/catalog'} element={<Catalog games={games} />} />
             <Route path={'/catalog/:gameId'} element={<GameDetails />} />

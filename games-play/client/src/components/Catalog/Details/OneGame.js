@@ -9,7 +9,8 @@ export const OneGame = ({
     _id,
     summary,
     allComments,
-    _ownerId
+    _ownerId,
+    
 }) => {
 
     const{userId,onDeleteClick} = useContext(UserContext)
