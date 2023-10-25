@@ -1,6 +1,7 @@
 import { UserContext } from "../../contexts/UserContext"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { useGameContext } from "../../contexts/GameContext"
 export const OneGame = ({
     title,
     category,
@@ -12,8 +13,8 @@ export const OneGame = ({
     _ownerId,
     
 }) => {
-
-    const{userId,onDeleteClick} = useContext(UserContext)
+    const {onDeleteClick} = useGameContext()
+    const{userId} = useContext(UserContext)
     const isOwner = _ownerId=== userId
     console.log(isOwner)
     return (
@@ -35,7 +36,7 @@ export const OneGame = ({
                 <ul >
                     {allComments.map(c =>
                         <li key={c._id} className="comment">
-                            <p>{c.username}: {c.comment}</p>
+                            <p>{c.comment}</p>
                         </li>
                     )}
                 </ul>

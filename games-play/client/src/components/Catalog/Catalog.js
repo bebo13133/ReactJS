@@ -1,9 +1,11 @@
 import { Game } from "./game"
-
+import { useGameContext } from "../contexts/GameContext"
 
 export const Catalog = ({
-    games
+
 }) => {
+
+    const {games} = useGameContext()
     return (
         <section id="catalog-page">
             <h1>All Games</h1>

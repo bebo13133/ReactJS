@@ -5,6 +5,7 @@ export const Logout = ()=>{
 const {onLogout} = useContext(UserContext)
 useEffect(()=>{
     onLogout()
+    localStorage.clear()
 },[onLogout])
 
 

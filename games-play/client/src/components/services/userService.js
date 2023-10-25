@@ -4,11 +4,12 @@ const baseUrl = `http://localhost:3030/users`
 
 export const userServiceFactory = (token)=>{
     const requester = requestFactory(token)
+    console.log(token)
 
     return {
         login:(data) => requester.post(`${baseUrl}/login`, data),
         register:(data) => requester.post(`${baseUrl}/register`, data),
-        logout:() => requester.post(`${baseUrl}/logout`),
+        logout:(token) => requester.post(`${baseUrl}/logout`),
 
     }
 }

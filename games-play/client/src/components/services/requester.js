@@ -5,7 +5,7 @@ const request = async (method, token, url, data) => {
 
     if (method !== 'GET') {
         options.method = method
-      
+
         if (data) {
             options.headers = {
                 'Content-Type': 'application/json'
@@ -32,8 +32,16 @@ const request = async (method, token, url, data) => {
     return result;
 
 }
-
 export const requestFactory = (token) => {
+    if (!token) {
+        const serializedAuth = localStorage.getItem('auth');
+
+        if (serializedAuth) {
+            const auth = JSON.parse(serializedAuth);
+            token = auth.accessToken;
+        }
+    }
+
 
     return {
         get: request.bind(null, 'GET', token),

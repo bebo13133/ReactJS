@@ -3,11 +3,13 @@ import { useService } from "../../../Hooks/useService"
 import { useForm } from "../../../Hooks/useForm"
 import { gameServiceFactory } from "../../services/gameService"
 import { useParams } from "react-router-dom"
-
+import { useGameContext } from "../../contexts/GameContext"
 export const EditGame = ({
-    onEditSubmit
+
 }) => {
 const {gameId} = useParams()
+
+const {onEditSubmit} = useGameContext()
 
     const gameService = useService(gameServiceFactory)
 const {onSubmit, onChangeHandler,onChangeValues,values} =useForm({
