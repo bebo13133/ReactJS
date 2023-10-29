@@ -15,6 +15,7 @@ export const UserProvider = ({
         try {
             const newUser = await userService.login(data)
             setAuth(newUser)
+       
             navigate("/catalog")
         } catch (err) {
             console.log("PROBLEM")
